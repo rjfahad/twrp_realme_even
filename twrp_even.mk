@@ -26,6 +26,11 @@ $(call inherit-product, vendor/twrp/config/common.mk)
 
 PRODUCT_DEVICE := even
 PRODUCT_NAME := twrp_even
+PRODUCT_BRAND := realme
+PRODUCT_MODEL := RMX3195
+PRODUCT_MANUFACTURER := realme
+PRODUCT_SHIPPING_API_LEVEL := 30
+TW_DEVICE_VERSION := By rjfahad
 
 # Dynamic
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
@@ -38,5 +43,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_SYSTEM_PROPERTY_BLACKLIST := \
     ro.product.device \
     ro.product.name
+
+# HACK: Set vendor patch level
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.build.security_patch=2099-12-31 \
+    ro.bootimage.build.date.utc=0 \
+    ro.build.date.utc=0
 
 $(call soong_config_set,libinit,vendor_init_lib,//$(LOCAL_PATH):libinit_even)

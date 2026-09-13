@@ -1,0 +1,8 @@
+MANIFEST_URL="https://github.com/rjfahad/manifest"
+MANIFEST_BRANCH="shrp-12.1"
+DEVICE_NAME="even"
+BUILD_TARGET="recovery"
+LUNCH_TARGET="twrp_even-eng"
+WORKSPACE="/home/rjfahad/twrp_workspace"
+TG_BOT_TOKEN="8906980478:AAHyJ2T3zqdv-XpqAWhfj91lImFHDBcBS1I"
+TG_CHAT_ID="5412335559"

@@ -24,6 +24,7 @@
 #include "vendor_init.h"
 
 using android::base::GetProperty;
+using android::base::SetProperty;
 
 std::vector<std::string> ro_props_default_source_order = {
     "",
@@ -45,12 +46,22 @@ void property_override(char const prop[], char const value[]) {
         __system_property_add(prop, strlen(prop), value, strlen(value));
 }
 
+void property_override_force(const char prop[], const char value[]) {
+    if (SetProperty(prop, value)) return;
+    // SetProperty may fail in early init; fall back to direct update
+    prop_info *pi = (prop_info *)__system_property_find(prop);
+    if (pi)
+        __system_property_update(pi, value, strlen(value));
+    else
+        __system_property_add(prop, strlen(prop), value, strlen(value));
+}
+
 void set_device_props(const std::string model, const std::string marketname) {
     const auto set_ro_product_prop = [](const std::string &source,
                                         const std::string &prop,
                                         const std::string &value) {
         auto prop_name = "ro.product." + source + prop;
-        property_override(prop_name.c_str(), value.c_str());
+        property_override_force(prop_name.c_str(), value.c_str());
     };
 
     for (const auto &source : ro_props_default_source_order) {
